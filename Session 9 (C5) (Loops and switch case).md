@@ -203,6 +203,7 @@ int main() {
     return 0;
 }
 ```
+![[Pasted image 20250815143458.png]]
 
 In this code it will iterate 6 times 
 ```c
