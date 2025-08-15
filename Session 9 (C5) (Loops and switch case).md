@@ -2,7 +2,7 @@
 The switch case can not have its condition (expression) of float data type, it must be an integer or enum, and the case can not be variable 
 variable, it must be const variable.
 It cannot be a normal variable, it must be a constant one.
-![[AVR-Notes/Attachments/pic1.png]]
+![pic1](Attachments/pic1.png)
 
 ## Why does this happen?
 The switch is faster than normal if condition as it doesn't check every condition in series till it find the working one, it just search which condition matches and executes it.
