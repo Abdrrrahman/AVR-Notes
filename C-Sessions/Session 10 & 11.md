@@ -65,7 +65,7 @@ I can use `printf("%o", num)` to print the octal numbers, and `printf("%p", num)
 # **Note 7: " Address Operator "**
 When you try to access the memory with an address of `01` , you are typing in the address lines of the processor `01` but the actual RAM memory doesn't have this address **This is a logical address**. What really occurs is that the `01` address is passed to the decoder into only 1 line is ON, and the rest is OFF, and the one line ON is the second one, so we access the second address.
 The decoder's inputs are the address lines, and the decoder outputs are the ENABLE pins of each memory line.
-![pic11_1](Attachment/Session-11/pic11_1.png)
+![pic11_1](AVR-Notes/Attachment/Session-11/pic11_1.png)
 
 In micro-controllers, as an example on the **atmega processors** the RAM memory inside it is 2KByte, and the processor interfaces with it in 16 address lines instead of 11 as needed, so the rest is ignored no matter it is zeros or ones.
 But in normal computers, the processors has a virtual memory (taking a part from the hard disk and considering it as a RAM) which needs virtual memory address, so the location addresses may be `32 bits`,`48 bits` or `64 bits` and we can check it.
