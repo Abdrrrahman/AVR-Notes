@@ -2,8 +2,6 @@
 The switch case can not have its condition (expression) of float data type, it must be an integer or enum, and the case can not be variable 
 variable, it must be const variable.
 It cannot be a normal variable, it must be a constant one.
-![pic1](Attachments/pic1.png)
-
 ## Why does this happen?
 The switch is faster than normal if condition as it doesn't check every condition in series till it find the working one, it just search which condition matches and executes it.
 It makes that by collecting every case in a table before runtime, then searching for the right one.
@@ -278,4 +276,168 @@ int main() {
 }
 ```
 
-# **Note 6: " 35:04 "**
+
+
+# **Tasks**
+## **Task 1:**
+**write a program to scan 3 numbers from the user And then display the maximum number of them , write program using if and another program using switch .**
+### **Task 1 using If conditions**
+```c
+#include <stdio.h>
+
+int main () {
+    int n1, n2, n3;
+    printf("Enter the three numbers:\t");
+    scanf("%i%i%i", &n1, &n2, &n3);
+    int max;
+    if(n1>n2)
+        if(n1>n3)
+            max = n1;
+        else
+            max = n3;
+    else
+        if(n2>n3)
+            max = n2;
+        else
+            max = n3;
+    printf("%i", max);
+    return 0;
+
+}
+```
+
+### **Task 1 using in-line condition**
+```c
+#include <stdio.h>
+
+int mainl () {
+    int n1, n2, n3;
+    int max;
+    printf("Enter the three numbers:\t");
+    scanf("%i%i%i", &n1, &n2, &n3);
+    
+    max = n1>n2? n1>n3? n1:n3:n2>n3? n2:n3;
+    printf("%i", max);
+    return 0;
+}
+```
+
+### **Task 1 using switches**
+```c
+#include <stdio.h>
+
+int main () {
+    int n1, n2, n3;
+    int max;
+    printf("Enter the three numbers:\t");
+    scanf("%i%i%i", &n1, &n2, &n3);
+  
+    switch(n1>n2) {
+        case 0: //n2>
+            switch(n2>n3) {
+                case 0: //n3>
+                    max = n3;
+                    break;
+                default:
+                    max = n2;
+            }
+            break;
+
+        default: //n1>
+            switch(n1>n3) {
+                case 0:
+                    max = n3;
+                    break;
+
+                default: //yes
+                    max = n1;
+             }
+    } 
+    printf("%i", max); 
+    return 0;
+}
+```
+
+## **Task 2:**
+
+**Write a program to scan number from the user and then display if this number is even or odd and display also if this number is prime number  or not prime number.**
+
+```c
+#include <stdio.h>
+#include <stdbool.h>
+
+int main () {
+    int num; bool isEven = true, isPrime = true;
+    printf("Enter the number\n");
+    scanf("%i", &num);
+
+    if(num<=1)
+        isPrime=false;
+  
+    if(num&1)
+        isEven = false;
+
+    int i;
+    for(i=2; i*i<=num; i++)
+        if(!(num%i)) {
+            isPrime = false;
+            break;
+        }
+        
+    isEven? printf("Even and "):printf("Odd and ");
+    isPrime? printf("Prime.\n"):printf("not Prime.\n");
+    return 0;
+```
+
+## **Task 3:**
+
+**Write a program to scan number from the  user and then display the number of 1’s in it’s binary equivalent .**
+
+```c
+#include <stdio.h>
+  
+int main () {
+    unsigned int num, kounter=0;
+    printf("Enter the number to display how many 1's in its binary\n");
+    scanf("%u", &num);
+  
+    while(num) {
+        if(num&1)
+            kounter++;
+        num>>=1;
+    }
+    printf("$ %u", kounter);
+
+    return 0;
+}
+```
+
+## **Task 4:**
+
+**Write a program to scan number from the  user and then display the equivalent binary of this number.**
+
+```c
+#include <stdio.h>
+
+void showBinary() {
+    unsigned int num;
+    printf("$ Enter the number to display its binary\n");
+    scanf("%u", &num);
+    getchar(); // to eat the \n left in buffer
+    printf("$ The binary representation of %u is:\n", num);
+    printf("$ ");
+    for(unsigned i=1u<<31, bitKount=1; i>0; i>>=1, bitKount++) {
+        if(num&i)
+            printf("1");
+        else
+            printf("0");
+        if (!(bitKount%8)) //grouping every 8 bits together.
+        printf(" ");
+    }
+}
+
+int main () {
+    showBinary();
+    return 0;
+}
+```
