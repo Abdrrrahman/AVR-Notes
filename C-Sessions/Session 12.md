@@ -223,7 +223,7 @@ int main () {
 	return 0;
 }
 ```
-# **Note 3: " Static Global VS "**
+# **Note 3: " Static Global VS Static Local "**
 
 ## Static Global Variable
 - **Scope** is Software scope.
@@ -348,8 +348,8 @@ int main()
 }
 ```
 # **Note 4: " Important Question "**
- **Does the `static` keyword affects the Scope or Lifetime?**
- In global it affects the scope, In local it affects the lifetime.
+**Does the `static` keyword affects the Scope or Lifetime?**
+In global it affects the scope, In local it affects the lifetime.
 # **Note 5: "  "**
 # **Note 6: "  "**
 # **Note 7: "  "**

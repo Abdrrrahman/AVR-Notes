@@ -222,6 +222,7 @@ both of them here will be promoted into signed integer so there is no any proble
 
 # **Note 4: " Float Promotion "**
 
+What happens here is that the rValue is int / int which is stored in int rValue before it is stored in the float lValue
 ```c
 #include <stdio.h>
 
@@ -235,9 +236,9 @@ int main()
 }
 -------------------------------------------------------------------------
 //-> 2.000000
-What happens here is that the rValue is int / int which is stored in int rValue before it is stored in the float lValue
 ```
 
+This solves the problem, but creates another one which is dealing with float numbers. Float numbers has some problems when dealing with bitwise operators and mod operator.
 ```c
 #include <stdio.h>
 
@@ -251,9 +252,9 @@ int main()
 }
 -------------------------------------------------------------------------
 //-> 2.500000
-This solves the problem, but creates another one which is dealing with float numbers. Float numbers has some problems when dealing with bitwise operators and mod operator.
 ```
 
+We solve this problem by explicitly typecasting them into float which just changes the data type of the rValue.
 ```c
 #include <stdio.h>
 
@@ -267,9 +268,9 @@ int main()
 }
 -------------------------------------------------------------------------
 //-> 2.500000
-We solve this problem by explicitly typecasting them into float which just changes the data type of the rValue.
 ```
 
+Here one of them only is explicitly typecasted into float and the other is promoted into float from int.
 ```c
 #include <stdio.h>
 
@@ -283,7 +284,6 @@ int main()
 }
 -------------------------------------------------------------------------
 //-> 2.500000
-Here one of them only is explicitly typecasted into float and the other is promoted into float from int.
 ```
 
 # **Note 5: " Reading MSB bug "**
@@ -453,67 +453,72 @@ The output shows that `operation` holds the ASCII value **10**, which correspond
 Your keyboard sends keystrokes more slowly than the CPU processes instructions, so there’s an **input buffer** between them. The input buffer stores everything you type until the program reads it.
 
 Here’s what happens step-by-step:
-1. When you run the program and it executes `scanf("%i", &x)`, it waits until there’s something in the input buffer and its datatype is the same as the scanned datatype.  
-    If you type `50` and press Enter, the buffer will hold:    
-    ```c
+**First:** 
+When you run the program and it executes `scanf("%i", &x)`, it waits until there’s something in the input buffer and its datatype is the same as the scanned datatype.  
+If you type `50` and press Enter, the buffer will hold:    
+```c
 '5' '0' '\n'
 ```
-    The `scanf("%i", &x)` reads the `50` (as an integer) and leaves `\n` in the buffer.
-    ![pic4](Attachments/Session-8/pic4.png)
-    
-    
-2. Next, `scanf("%i", &y)` is called.  
-    It expects an integer, but the first thing in the buffer is `\n`, which isn’t a valid integer.  
-    `scanf` ignores it and waits for the next integer.  
-    When you type `60` and press Enter, the buffer becomes:
-    ```c
+The `scanf("%i", &x)` reads the `50` (as an integer) and leaves `\n` in the buffer.
+![pic4](Attachments/Session-8/pic4.png)
+
+
+**Second:**
+Next, `scanf("%i", &y)` is called.  
+It expects an integer, but the first thing in the buffer is `\n`, which isn’t a valid integer.  
+`scanf` ignores it and waits for the next integer.  
+When you type `60` and press Enter, the buffer becomes:
+```c
 '6' '0' '\n'
 ```
-    Now `y` gets `60`, and the newline `\n` is still in the buffer.
-    
-	 ![pic5](Attachments/Session-8/pic5.png)
-	 
-    
-3. Then `scanf("%c", &operation)` runs.  
-    It reads **the very next character** from the buffer - which is `\n`- instead of waiting for you to type an operator.  
-    That’s why `operation` becomes ASCII 10 (`\n`), triggering the “wrong operation” branch.
+Now `y` gets `60`, and the newline `\n` is still in the buffer.
+
+![pic5](Attachments/Session-8/pic5.png)
+
+
+**Third:**
+Then `scanf("%c", &operation)` runs.  
+It reads **the very next character** from the buffer - which is `\n`- instead of waiting for you to type an operator.  
+That’s why `operation` becomes ASCII 10 (`\n`), triggering the “wrong operation” branch.
 
 
 ### **How can we solve this problem?**
 
-- First Method to solve this problem is to scan the operation first, then scan the numbers.
-  This will make the `\n` ignored as it is not a valid integer to be scanned.
+**First Method** to solve this problem is to scan the operation first, then scan the numbers.
+This will make the `\n` ignored as it is not a valid integer to be scanned.
 
-- Second Method is by using this line `fflush(stdin);`
-  (This is the most popular one)
-  this line means that I order the processor to flush (erase) the input buffer,
-  So it flushes the buffer before every time it is going to scan a variable.
-  
-- Third Method is by skipping white space characters,
-  White space characters are any escape character like `\n` or any space character like " "
-  This can be preformed by scanning the character with a space before the format specifier
-  `scanf(" %c", &opr);` the space before the `%c` tells the processor to skip white space characters.
-  So, When we are scanning chars from the user then we use this command.
-  
-  #### **But why `%i` already skips whitespace automatically but `%c` does not?**
-  When you use a numeric format specifier like `%i`, `%d`, `%f`, etc., `scanf` **automatically skips any leading whitespace** before trying to read the number.
+**Second Method** is by using this line `fflush(stdin);`
+(This is the most popular one)
+this line means that I order the processor to flush (erase) the input buffer,
+So it flushes the buffer before every time it is going to scan a variable.
 
-    ```c
+**Third Method** is by skipping white space characters,
+White space characters are any escape character like `\n` or any space character like " "
+This can be preformed by scanning the character with a space before the format specifier
+`scanf(" %c", &opr);` the space before the `%c` tells the processor to skip white space characters.
+So, When we are scanning chars from the user then we use this command.
+
+#### **But why `%i` already skips whitespace automatically but `%c` does not?**
+When you use a numeric format specifier like `%i`, `%d`, `%f`, etc., `scanf` **automatically skips any leading whitespace** before trying to read the number.
+
+```c
 '\n' '6' '0' '\n'
 ```
 
-	`%i` will first skip over the `'\n'`, then read `"60"` as an integer.
+`%i` will first skip over the `'\n'`, then read `"60"` as an integer.
 
-	`%c` is different — it **does not skip whitespace**.  
-		- a space `' '`
-		- a newline `'\n'`
-		- a tab `'\t'`
-		- or any other whitespace
+`%c` is different — it **does not skip whitespace**.  
+- a space `' '`
+- a newline `'\n'`
+- a tab `'\t'`
+- or any other whitespace
 
 #### **Why this difference exists?**
-- For numbers: It’s common for users to type spaces or press Enter before numbers, so C’s designers made numeric specifiers skip whitespace automatically.
-- For characters: Sometimes you **actually want to read spaces, tabs, or newlines** as valid input.  
-    For example, if you’re reading raw text, `" "` (two spaces) might be important data, so `%c` leaves whitespace handling up to you.
+**For numbers:** 
+It’s common for users to type spaces or press Enter before numbers, so C’s designers made numeric specifiers skip whitespace automatically.
+**For characters:**
+Sometimes you **actually want to read spaces, tabs, or newlines** as valid input.  
+For example, if you’re reading raw text, `" "` (two spaces) might be important data, so `%c` leaves whitespace handling up to you.
 
 
 ### This bug is handled in `cin>>` function of C++.
