@@ -40,7 +40,7 @@ The startup code operates when you run the code, not build it.
 ## Run on codeblocks or VScode is equivalent to giving power to the micro-controller. 
 
 # **Note 4: " MISRA C "**
-MISRA C is a set of rules, made to make sure that your c language code is fully reliable, it is made for the automotive cars industry specially, One of its rules that your function has only one return and the return is the last statement of your code.
+MISRA C is a set of rules, made to make sure that your c language code is fully reliable, it is made for the automotive cars industry specially, One of its rules that your function has only one return and the return is the last statement of your code unless you have a conditioned return.
 
 ****
 # **Note 5: " Modularity "** 
