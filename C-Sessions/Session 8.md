@@ -448,7 +448,7 @@ printf("%i\n", operation);
 ```
 The output shows that `operation` holds the ASCII value **10**, which corresponds to `\n` (newline). This means the program read the Enter key you pressed as the operator.
 
-![pic3](AVR-Notes/C-Sessions/Attachments/Session-8/pic3.png)
+![pic3](Attachments/Session-8/pic3.png)
 ##### **Why does this happen?**  
 Your keyboard sends keystrokes more slowly than the CPU processes instructions, so there’s an **input buffer** between them. The input buffer stores everything you type until the program reads it.
 

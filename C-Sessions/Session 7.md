@@ -87,7 +87,7 @@ int main() {
 }
 ```
 Now lets say that you want to toggle three bits at the same time
-Bit number 5, bit number 4 and bit number 2. 
+Bit number 6, bit number 4 and bit number 2. 
 ```c
 #include <stdio.h>
 int main() {
@@ -217,7 +217,7 @@ First we shift it left by 5
 Then we shift it right by (register size - 5)
 Then we Bitwise or them 
 
-	# **Note 7: " Sizeof operator "**
+# **Note 7: " Sizeof operator "**
 It is a unary operator which returns the size of data in bytes.
 It doesn't evaluate anything inside it
 Meaning that the output of the following code will be 4 4, as it doesn't perform any operation happens inside it
@@ -304,4 +304,12 @@ int main() {
 //-> Hello World!
 //-> 12
 //-> x=3
+```
+
+
+```bash
+Set a bit high -> OR
+Toggle a bit -> XOR
+Clear a bit -> NAND
+Read a bit -> AND
 ```

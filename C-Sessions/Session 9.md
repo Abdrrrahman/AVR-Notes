@@ -209,12 +209,12 @@ In this code it will iterate 6 times
 #include <stdio.h>
 
 int main() {
-    int i,j;
-    for (i=0, j=0; i<3,j<5; i++, j++) {
-        counter++;
-    }
-    printf("%i", counter);
-    return 0;
+    int i,j, counter =0;
+    for (i=0, j=0; i<3,j<6; i++, j++) {
+        counter++;
+    }
+    printf("%i", counter);
+    return 0;
 }
 ```
 as the comma operator in the condition section only takes what is on the right`i<3,j<5`.
@@ -435,7 +435,7 @@ void showBinary() {
         printf(" ");
     }
 }
-
+	
 int main () {
     showBinary();
     return 0;

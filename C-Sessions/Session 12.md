@@ -1,24 +1,30 @@
-#static #extern #variableTypes #memorySegments
-# **Note 1: " Global VS Local Variables types "**
-Variables have many types that differs in 4 main points:
-- Scope
-- Initial Value
-- Memory segment
-- Lifetime
+# Variable Types and Memory Management in C/C++
 
-### Scope Resolving:
-The scope resolving is (or **scope resolution**) is the process by which a programming language determines **which variable, function, or class member to use** when there are multiple definitions with the same name in different scopes (local, global, class, namespace, etc.).
-##### In C++:
+#static #extern #variableTypes #memorySegments
+
+## Understanding Variable Types
+
+Variables in C/C++ differ across four fundamental characteristics:
+- **Scope** - Where the variable can be accessed
+- **Initial Value** - What value the variable starts with
+- **Memory Segment** - Which part of memory stores the variable
+- **Lifetime** - How long the variable exists
+
+## Scope Resolution
+
+**Scope resolution** is the process by which a programming language determines which variable, function, or class member to use when multiple definitions share the same name across different scopes (local, global, class, namespace, etc.).
+
+### C++ Scope Resolution Example:
 ```cpp
 #include <iostream>
 using namespace std;
 
-int x = 100;
+int x = 100;  // Global variable
 
 int main() {
-    int x = 50; 
-    cout << x << endl;    // Prints 50 (local x)
-    cout << ::x << endl;  // Prints 100 (global x, resolved using ::)
+    int x = 50;               // Local variable
+    cout << x << endl;        // Prints 50 (local x)
+    cout << ::x << endl;      // Prints 100 (global x using scope resolution operator)
 }
 ```
 
@@ -27,473 +33,475 @@ class A {
 public:
     static int value;
 };
-int A::value = 10; // The variable value that belongs to the namespace A
+int A::value = 10;  // Define the static member variable
 ```
 
-#### Static Scoping VS Dynamic Scoping:
-| Feature              | Static Scoping (Lexical)      | Dynamic Scoping                   |
-| -------------------- | ----------------------------- | --------------------------------- |
-| **When decided**     | Compile time                  | Runtime                           |
-| **How resolved**     | Based on **code structure**   | Based on **call stack**           |
-| **Common in**        | C, C++, Java, Python, JS      | Lisp (early), Perl, Bash (partly) |
-| **Efficiency**       | Faster (compiler knows ahead) | Slower (runtime lookup needed)    |
-| **Example behavior** | Always consistent             | Depends on caller                 |
-##### Static Scoping (Lexical Scoping)
-In Static scoping (or lexical scoping), definition of a variable is resolved by searching its containing block or function. If that fails, then searching the outer containing block and so on... The compiler looks at **where the variable is defined in the source code**, not where the function is called. This is the **most common scoping rule** in modern languages like **C, C++, Java, Python, JavaScript**.
+### Static vs Dynamic Scoping
 
-##### Dynamic Scoping
-**In dynamic scoping,** definition of a variable is resolved by searching its containing block and if not found, then searching its calling function and if still not found then the function which called that calling function will be searched and so on... The program looks for the most recent variable definition in the **function call chain**, not in the lexical code structure. C, C++, and Java **do not use dynamic scoping** Some older languages (like **LISP, early versions of BASIC, Perl**) supported it.
-Both C and C++ supports only static scoping and doesn’t support dynamic scoping.
+| Feature              | Static Scoping (Lexical)        | Dynamic Scoping                    |
+| -------------------- | ------------------------------- | ---------------------------------- |
+| **When decided**     | Compile time                    | Runtime                            |
+| **How resolved**     | Based on **code structure**     | Based on **call stack**           |
+| **Common in**        | C, C++, Java, Python, JavaScript| Lisp (early), Perl, Bash (partial)|
+| **Efficiency**       | Faster (resolved at compile time)| Slower (runtime lookup required)  |
+| **Behavior**         | Always consistent               | Depends on calling context         |
 
+#### Static Scoping (Lexical Scoping)
+In static scoping, variable resolution follows the lexical structure of the code. The compiler searches for variables in the containing block or function first, then in outer scopes, and finally in global scope. This approach looks at **where the variable is defined in the source code**, not where the function is called. Static scoping is used by **C, C++, Java, Python, and JavaScript**.
+
+#### Dynamic Scoping
+In dynamic scoping, variable resolution follows the execution call stack. The program searches for variables in the current function, then in the calling function, and continues up the call chain. This approach looks for the most recent variable definition in the **function call sequence**, not in the lexical code structure. **C and C++ do not support dynamic scoping**. Some older languages like **LISP and early BASIC** supported it.
+
+### Example: Static vs Dynamic Scoping
 ```c
-# include <stdio.h>
-int x = 0;
-int f()
-{
-	return x;
-}
-int g()
-{
-	int x = 1;
-	return f();
-}
-int main()
-{
-	printf("%d", g());
-	printf("\n");
-}
-```
-It prints `0` as C only supports static scoping, but if it supports dynamic scoping, it will print `1`.
-
-### Extern Keyword:
-Imagine you have 2 source files in the same project, One named as **file1.c** and the other is named as **file2.c**, In the **file1.c** You have declared an `int x=5;` so if you tried to use it in **file2.c**. As the variable is declared with only **file scope**,
-So how can we extend its scope to be **Software scope** (accessible through every source file in the same project), this can be done using the `extern` keyword.
-```c
-//file1.c
 #include <stdio.h>
 
-int main () {
-	return 0;
+int x = 0;  // Global variable
+
+int f() {
+    return x;
 }
-```
 
-```c
-//file2.c
-#include <stdio.h>
-
-extern int x;
-
-int main () {
-	return 0;
-}
-```
-You can not assign a value during the initialization, **The linker** is responsible for linking all these files during compilation
-# **Note 2: " Global VS Local "**
-
-## Local Variable:
-- **Scope** 
-It scope is only block scope (between the curly brackets). It may be inside main or a function:
-```c
-#include <stdio.h
-
-int main() {
-	int x;
-	
-	return 0;
-}
-```
-or may be inside a bracket:
-```c
-#include <stdio.h
-
-int main() {
-	{
-		int x;
-	}
-	
-	return 0;
-}
-```
-or may be a function argument:
-```c
-#include <stdio.h
-
-void fun(int x) {
-	return;
+int g() {
+    int x = 1;  // Local variable
+    return f();
 }
 
 int main() {
-	
-	return 0;
+    printf("%d\n", g());
+    return 0;
+}
+```
+This prints `0` because C uses static scoping. With dynamic scoping, it would print `1`.
+
+## The extern Keyword
+
+The `extern` keyword extends a variable's scope from file scope to project scope, allowing access across multiple source files.
+
+Consider two files in the same project:
+
+**file1.c:**
+```c
+#include <stdio.h>
+
+int x = 5;  // Global variable with file scope
+
+int main() {
+    return 0;
 }
 ```
 
-- **Initial Value** is garbage value.
-- **Memory segment** is stack.
-- **Memory Lifetime** is function runtime
-## Global Variable
-- **Scope** is file scope.
-- **Initial Value** is default value of each datatype.
-- **Memory segment** is `.bss` if it is initialized without assignment or with assignment with the default value, and it is `.data` if it is initialized with assignment of a non-default value. 
-- **Memory Lifetime** is program runtime.
-### Local VS Global
-#### Trick 1:
-```C
+**file2.c:**
+```c
 #include <stdio.h>
-int x=5;
 
-int main () {
-	int x=10;
-	printf("%i\n", x);
-	return 0;
+extern int x;  // Declares x as externally defined
+
+int main() {
+    printf("%d\n", x);  // Can now access x from file1.c
+    return 0;
 }
 ```
-In this code the global variable is declared in the `.data` segment as it is assigned into non default value, while the local variable is declared in the `stack` segment, So, when we try to print the variable it takes the smaller scope which means that the output in the above code is `10`.
-#### Trick 2:
-```C
+
+**Important:** You cannot initialize a variable when declaring it with `extern`. The linker handles the connection between files during compilation.
+
+## Local Variables
+
+### Characteristics:
+- **Scope:** Block scope (within curly braces)
+- **Initial Value:** Garbage value (undefined)
+- **Memory Segment:** Stack
+- **Lifetime:** Function execution duration
+
+### Examples of Local Variable Scope:
+
+**Function scope:**
+```c
 #include <stdio.h>
-int x=5;
+
+int main() {
+    int x;  // Local to main function
+    return 0;
+}
+```
+
+**Block scope:**
+```c
+#include <stdio.h>
+
+int main() {
+    {
+        int x;  // Local to this block
+    }
+    return 0;
+}
+```
+
+**Parameter scope:**
+```c
+#include <stdio.h>
+
+void fun(int x) {  // x is local to function fun
+    return;
+}
+
+int main() {
+    return 0;
+}
+```
+
+## Global Variables
+
+### Characteristics:
+- **Scope:** File scope
+- **Initial Value:** Default value for the data type (0 for integers, NULL for pointers)
+- **Memory Segment:** `.bss` (if uninitialized or initialized to default value) or `.data` (if initialized to non-default value)
+- **Lifetime:** Program execution duration
+
+## Local vs Global: Practical Examples
+
+### Example 1: Variable Shadowing
+```c
+#include <stdio.h>
+
+int x = 5;  // Global variable
+
+int main() {
+    int x = 10;  // Local variable shadows global
+    printf("%i\n", x);  // Prints 10
+    return 0;
+}
+```
+The local variable takes precedence due to smaller scope.
+
+### Example 2: Function Access
+```c
+#include <stdio.h>
+
+int x = 5;  // Global variable
 void f(void);
 
-int main () {
-	int x=10;
-	printf("%i\n", x);
-	return 0;
+int main() {
+    int x = 10;  // Local variable
+    printf("%i\n", x);  // Prints 10
+    f();                 // Prints 5
+    return 0;
 }
 
 void f(void) {
-	printf("%i\n", x);
+    printf("%i\n", x);  // Accesses global x (no local x in scope)
 }
 ```
-The scope of the function `f` doesn't see the local variable, which means that `f` function doesn't print `10`, it prints `5` instead.
-#### Trick 3:
-```C
-#include <stdio.h>
-int x=5;
 
-int main () {
-	int x=10;
-	{
-		x=20;
-		printf("%i\n", x);
-	}
-	printf("%i\n", x);
-	return 0;
-}
-```
-It prints `20` two times, global variable is declared in the `.data` segment as it is assigned into non default value, while the local variable is declared in the `stack` segment, then the local variable is overwritten to `20`.
-#### Trick 4:
-```C
-#include <stdio.h>
-int x=5;
-
-int main () {
-	int x=10;
-	{
-		int x;
-		x=20;
-		printf("%i\n", x);
-	}
-	printf("%i\n", x);
-	return 0;
-}
-```
-It prints `20` then `10`, global variable is declared in the `.data` segment as it is assigned into non default value, while the local variable is declared in the `stack` segment, and another local variable is declared in the `stack` segment.
-#### Trick 5:
+### Example 3: Block Modification
 ```c
 #include <stdio.h>
 
-int x;
+int x = 5;  // Global variable
 
-int main () {
-	int x=x;
-	printf("%i\n", x);
-	return 0;
+int main() {
+    int x = 10;  // Local variable
+    {
+        x = 20;      // Modifies the local variable
+        printf("%i\n", x);  // Prints 20
+    }
+    printf("%i\n", x);      // Prints 20
+    return 0;
 }
 ```
-It prints garbage value, global variable is declared in the `.data` segment as it is assigned into non default value, while the local variable is declared in the `stack` segment, this local variable is then assigned into itself so it stores the garbage value again.
-In Cpp this differs depending on compiler, and you can use the `::` operator which makes me get the bigger scope.
+
+### Example 4: Nested Block Variables
 ```c
+#include <stdio.h>
+
+int x = 5;  // Global variable
+
+int main() {
+    int x = 10;  // Local variable
+    {
+        int x;       // New local variable in inner scope
+        x = 20;
+        printf("%i\n", x);  // Prints 20
+    }
+    printf("%i\n", x);      // Prints 10 (outer local variable)
+    return 0;
+}
+```
+
+### Example 5: Self-Assignment Issue
+```c
+#include <stdio.h>
+
+int x;  // Global variable (initialized to 0)
+
+int main() {
+    int x = x;  // Local variable assigned to itself (garbage value)
+    printf("%i\n", x);  // Prints garbage value
+    return 0;
+}
+```
+
+In C++, you can use the scope resolution operator to access the global variable:
+```cpp
 #include <iostream>
 
-int x;
+int x;  // Global variable
 
-int main () {
-	int x=::x;
-	printf("%i\n", x);
-	return 0;
+int main() {
+    int x = ::x;  // Local variable assigned global variable's value
+    std::cout << x << std::endl;  // Prints 0
+    return 0;
 }
 ```
-# **Note 3: " Static Global VS Static Local "**
 
-## Static Global Variable
-- **Scope** is Software scope.
-- **Initial Value** is default value of each datatype.
-- **Memory segment** is `.bss` if it is initialized without assignment or with assignment with the default value, and it is `.data` if it is initialized with assignment of a non-default value. 
-- **Memory Lifetime** is program runtime.
+## Static Variables
 
-Static global is a global variable that can't be used in another source file, can't be used with `extern` keyword, static global is the same as global in every characteristics, the only difference is the `extern`. 
-## Static Local Variable
-- **Scope** is file scope.
-- **Initial Value** is zero as it is stored in `.bss` or the `.data`.
-- **Memory segment** is `.bss` if it is initialized without assignment or with assignment with the default value, and it is `.data` if it is initialized with assignment of a non-default value. 
-- **Memory Lifetime** is program runtime. 
+### Static Global Variables
+- **Scope:** File scope (cannot be accessed from other files)
+- **Initial Value:** Default value for the data type
+- **Memory Segment:** `.bss` or `.data` (same as regular global variables)
+- **Lifetime:** Program execution duration
 
-### Trick 1:
-**Static datatypes** are created **before** runtime, the only datatype that is created **during** runtime is the **local datatypes**.
+Static global variables are identical to regular global variables except they cannot be accessed using `extern` from other files.
+
+### Static Local Variables
+- **Scope:** Block scope (where declared)
+- **Initial Value:** Default value (0 for integers)
+- **Memory Segment:** `.bss` or `.data`
+- **Lifetime:** Program execution duration
+
+Static local variables are initialized only once before runtime, so we can say that all variable types are initialized before runtime except for normal local variables which are initialized during runtime.
+### Static Variable Examples
+
+#### Example 1: Regular vs Static Local
 ```c
 #include <stdio.h>
-void print (void);
-int main()
-{
-	print();
-	print();
-	print();
-	return 0;
+
+void print(void);
+
+int main() {
+    print();  // Prints 0
+    print();  // Prints 0
+    print();  // Prints 0
+    return 0;
 }
-void print (void)
-{
-	int x=0;
-	printf("x=%i\n",x);
-	x++;
+
+void print(void) {
+    int x = 0;       // Regular local variable
+    printf("x=%i\n", x);
+    x++;
 }
 ```
-The output of the code will be
-```c
-0
-0
-0
-```
-Because the local is created every time in the stack above each other, so it traces which variable is nearest to me.
 
 ```c
 #include <stdio.h>
-void print (void);
-int main()
-{
-	print();
-	print();
-	print();
-	return 0;
-}
-void print (void)
-{
-	static int x=0;
-	printf("x=%i\n",x);
-	x++;
-}
-```
-But the output of this code is:
-```c
-0
-1
-2
-```
-As the static local is initialized only once before the runtime and stored in `.bss`
 
-### Trick 2:
-This code is a compilation error due to trying to assign a return value of a function that will be executed **during runtime**, while the static datatypes **only executes before the runtime**.
+void print(void);
+
+int main() {
+    print();  // Prints 0
+    print();  // Prints 1
+    print();  // Prints 2
+    return 0;
+}
+
+void print(void) {
+    static int x = 0;  // Static local variable
+    printf("x=%i\n", x);
+    x++;
+}
+```
+
+#### Example 2: Initialization Restrictions
+This code causes a compilation error:
 ```c
 #include <stdio.h>
+
 int print2(void);
 void print(void);
-int main()
-{
-	print();
-	return 0;
+
+int main() {
+    print();
+    return 0;
 }
-void print(void)
-{
-	static int x=print2(); // Compilation error
-	printf("x=%i\n",x);
+
+void print(void) {
+    static int x = print2();  // ERROR: Cannot initialize static with function call
+    printf("x=%i\n", x);
 }
-int print2(void)
-{
-	printf("not ok\n");
-	return 5;
+
+int print2(void) {
+    printf("not ok\n");
+    return 5;
 }
 ```
 
-But this code is not.
+Static variables must be initialized with compile-time constants only.
+
+## Key Insight: Static Keyword Effects
+
+**Does the `static` keyword affect scope or lifetime?**
+- For **global variables:** Affects scope (limits to file scope)
+- For **local variables:** Affects lifetime (extends to program lifetime)
+
+## Static Functions
+
+By default, functions have software scope and can be used across files. The `static` keyword limits function scope to the current file.
+
+**Example: Regular function (accessible across files):**
+
+**file1.c:**
+```c
+void hello(void) {
+    printf("hello");
+}
+```
+
+**file2.c:**
 ```c
 #include <stdio.h>
-int print2(void);
-void print(void);
-int main()
-{
-	print();
-	return 0;
-}
-void print(void)
-{
-	int x=print2();
-	printf("x=%i\n",x);
-}
-int print2(void)
-{
-	printf("not ok\n");
-	return 5;
+
+void hello(void);  // Function declaration
+
+int main() {
+    hello();  // Works fine
+    return 0;
 }
 ```
 
-We can also assign a constant value to it.
+**Example: Static function (file scope only):**
+
+**file1.c:**
+```c
+static void hello(void) {
+    printf("hello");
+}
+```
+
+**file2.c:**
 ```c
 #include <stdio.h>
 
-int main()
-{
-	int y=10;
-	static int x=6; // Valid
-	printf("x=%i\n",x);
-	return 0;
-}
-```
-# **Note 4: " Important Question "**
-**Does the `static` keyword affects the Scope or Lifetime?**
-In global it affects the scope, In local it affects the lifetime.
-# **Note 5: " Static Functions "**
-By default functions can be used in all source files, so we don't have to type the keyword `extern` in front of every function implementation, But if I used `static`, then I cannot use it in any other source file.
+static void hello(void);  // Declaration
 
-**Example on using extern functions:**
-```c 
-//file1.c
-
-void hello(void)
-{
-	printf("hello");
-	return;
+int main() {
+    hello();  // Linker error - function not accessible
+    return 0;
 }
 ```
 
-```c
-//file2.c
-#include <stdio.h>
+## Const Variables
 
-void hello(void);
+### Const Local Variables
+- Have the same properties as regular local variables
+- Cannot be modified after initialization
+- Can be changed indirectly using pointers (undefined behavior)
 
-int main () {
-	
-	hello();
-	
-	return 0;
-}
-```
+### Const Global Variables
+- Have the same properties as regular global variables except:
+- Cannot be modified after initialization
+- Stored in `.rodata` (read-only data) segment instead of `.data` or `.bss`
+- Attempting to modify results in runtime error
 
-****
+## Memory Segments
 
-**Example on using static functions:**
-```c 
-//file1.c
+### RAM Segments:
 
-static void hello(void)
-{
-	printf("hello");
-	return;
-}
-```
+#### Stack
+- Stores function contexts (things function stores before calling another function) and local variables
+- Grows and shrinks during program execution
+- Fast access but limited size
 
-```c
-//file2.c
-#include <stdio.h>
+#### Heap
+- Used for dynamic memory allocation at runtime
+- Grows and shrinks based on memory requests
+- Managed by `malloc()`, `free()`, etc.
 
-static void hello(void);
+#### .bss (Block Started by Symbol)
+- Stores uninitialized global and static variables
+- Variables automatically initialized to zero
+- Consumes no space in the executable file
 
-int main () {
-	
-	hello(); // Linker error during compilation
-	
-	return 0;
-}
-```
-# **Note 6: " Const Local VS Const Global "**
-They have all the same properties of normal local and normal global.
-**The first** difference that they are constant, can't be changed, You can read it only. 
-**The second** difference is that the const global is not stored in `.bss` or `.data`, they are stored in `.rodata` memory segment, this segment gives a runtime error if you tried to write in it during runtime.
+#### .data
+- Stores initialized global and static variables with non-zero values
+- Takes up space in the executable file
 
-The const local can be changed during runtime using pointers.
-# **Note 7: " Memory Segments "**
+### Flash Memory Segments:
 
-##  **RAM Segments:**
-### Stack:
-It is found in the RAM memory, stores the context of functions, local variables.
-### Heap
-It stores the dynamic memory that are reserved during runtime.
-The **heap** is a memory region used for **dynamic memory allocation** at runtime.
-Unlike `.data`, `.bss`, `.rodata`, or `.text` (which are fixed at compile/link time), the **heap grows and shrinks as your program runs**, depending on how much memory you request.
-### .bss:
-**(Block Started by Symbol)** segment is a part of memory where **uninitialized global and static variables** are stored or the ones initialized and assigned to **0**.
-These variables are not explicitly given a value in the program source, so the system initializes them to **zero** (or null) at program startup.
-### .data:
-It is a portion of a program’s memory where **data that has been explicitly initialized** by the programmer is stored.
-This includes global variables, static variables, and constants with assigned values before program execution.
+#### .rodata (Read-Only Data)
+- Stores string literals, const global variables, and lookup tables
+- Read-only during program execution
+- Located in non-volatile memory
 
-****
-##  **Flash Segments:**
-### .rodata
-**(Read-Only Data)** segment stores **constants and read-only variables**, String literals (`"Hello World"`), `const` global variables and Compiler-generated lookup tables.
-We read only from it, we don't write, so it is found in the **Flash Memory**.
-### Interrupt Vector Table
-The **vector segment** (or **interrupt vector table**) is a reserved area in memory that stores the **addresses (pointers) of interrupt handlers**.
-Each **interrupt/exception** has an entry in this table, pointing to the function (handler) that should run when that interrupt occurs.
-We read only from it, we don't write, so it is found in the **Flash Memory**.
-### .text
-The **.text segment** is where your code is stored in it in the form of **executable** (binary).
-It contains all the compiled functions and code blocks. 
-We read only from it, we don't write, so it is found in the **Flash Memory**.
-### .data:
-It is a portion of a program’s memory where **data that has been explicitly initialized** by the programmer is stored.
-This includes global variables, static variables, and constants with assigned values before program execution.
+#### Interrupt Vector Table (IVT)
+- Contains addresses of interrupt handler functions
+- Each interrupt type has a corresponding entry
+- Read-only, located in flash memory
 
-# **Note 8: " .data is found in RAM and Flash "**
-`.data` is found in both RAM memory and Flash memory, but why?
+#### .text
+	- Contains compiled program instructions (machine code) (exe)
+- All executable code resides here
+- Read-only, located in flash memory
 
-The `exe` file contains 2 things, some binary which is equivalent to the code, and some identifiers which are equivalent to global and static variables you have created.
-The programmer loads the exe file on the **Flash**, the exe is loaded to the `.text`, and All the identifiers are loaded into the `.data`. 
-The microprocessor often has its startup code in the `.text` segment, but sometimes it is found in a separate segment in the **Flash**, The program counter inside the processor first holds the address of the first order of the startup code.
-The startup code form its tasks is copying the static variables, global variables that are initialized with a non zero value in the `.data` inside **RAM**. Then it copies static and global variables that are not initialized with value (Zeros them), or initialized with zero into the `.bss`.
+### Dual Location: .data Segment
 
-You can notice in this picture that all the segments of the **Flash** are used during **load** phase, and all the **RAM** segments are used during **runtime** phase, and the `IVT`, `.text`, and `.rodata` are used during both as during runtime I need to read the code (`.text`), I need to read the vectors (`.IVT`),
-I need to read the const global variables or string literals (`.rodata`).
+The `.data` segment exists in both Flash and RAM:
+
+1. **Flash Memory:** Contains initial values of initialized global/static variables
+2. **RAM:** Working copy created at program startup
+
+**Startup Process:**
+1. Program loads into Flash memory
+2. Startup code (in `.text`) executes first
+3. Startup code copies initialized data from Flash `.data` to RAM `.data`
+4. Startup code zeros out the `.bss` segment in RAM
+5. Program execution begins
 
 ![pic1](Attachments/Session-12/pic1.png)
 
-| Segment       | Stores                               | Location in Flash                          | Location in RAM | Writable? | Notes                                                    |
-| ------------- | ------------------------------------ | ------------------------------------------ | --------------- | --------- | -------------------------------------------------------- |
-| `.text`       | Program instructions (machine code)  | Yes                                        | No              | No        | Executes directly from Flash                             |
-| `.rodata`     | Read-only constants, string literals | Yes                                        | No              | No        | Read-only, stored in Flash                               |
-| `.data`       | Initialized globals/statics          | Yes (initial copy)                         | Yes (runtime)   | Yes       | Values copied from Flash → RAM at startup                |
-| `.bss`        | Uninitialized globals/statics        | No                                         | Yes (zeroed)    | Yes       | Zero-initialized in RAM                                  |
-| Heap          | Dynamic memory                       | No                                         | Yes             | Yes       | Grows upward in RAM                                      |
-| Stack         | Local variables, return addresses    | No                                         | Yes             | Yes       | Grows downward in RAM                                    |
-| Vectors (IVT) | Interrupt/reset vectors              | Yes (at fixed Flash address, e.g., 0x0000) | No              | No        | First entry is initial stack pointer, then ISR addresses |
-# **Note 9: " Check Size "**
-You can view the size of your code through two ways.
-**First** is by using your cmd:
+| Segment       | Content                          | Flash Location | RAM Location | Writable? | Notes                                    |
+| ------------- | -------------------------------- | -------------- | ------------ | --------- | ---------------------------------------- |
+| `.text`       | Machine code instructions        | Yes            | No           | No        | Executes directly from Flash            |
+| `.rodata`     | Constants, string literals       | Yes            | No           | No        | Read-only data in Flash                  |
+| `.data`       | Initialized globals/statics      | Yes (initial)  | Yes (runtime)| Yes       | Copied from Flash to RAM at startup     |
+| `.bss`        | Uninitialized globals/statics    | No             | Yes (zeroed) | Yes       | Zero-initialized in RAM                  |
+| Heap          | Dynamic memory                   | No             | Yes          | Yes       | Grows upward in RAM                      |
+| Stack         | Local vars, return addresses     | No             | Yes          | Yes       | Grows downward in RAM                    |
+| IVT           | Interrupt vectors                | Yes (fixed)    | No           | No        | Contains stack pointer and ISR addresses |
 
+## Checking Code Size
+
+You can view your program's memory usage in two ways:
+
+**Method 1: Command line**
 ![pic2](Attachments/Session-12/pic2.png)
 
-**Second** is by checking your `lss` file inside the directory of the project.
+**Method 2: Check the `.lss` file in your project directory**
 
-# **Note 10: " Auto keyword "**
-The `auto` keyword is for the declaring of local variables, it is not important and it doesn't make any difference.
+## Storage Class Keywords
+
+### auto Keyword
+- Used for declaring local variables (optional)
+- Has no functional effect in modern C
+- Cannot be used with global variables
+
 ```c
 #include <stdio.h>
 
-int main () {
-	auto int x = 10; // Shows who reads the code that it is local
-	return 0;
+int main() {
+    auto int x = 10;  // Explicitly shows it's a local variable
+    return 0;
 }
 ```
 
-This is an error as the `auto` is used for local variables only, not global.
+Invalid usage:
 ```c
 #include <stdio.h>
 
-auto int x = 10; // Error
+auto int x = 10;  // ERROR: auto cannot be used for global variables
 
-int main () {
-	
-	return 0;
+int main() {
+    return 0;
 }
 ```
 
@@ -509,17 +517,148 @@ int main () {
 ```
 
 
-# **Note 11: " Register keyword "**
-The `register` keyword suggests to the compiler that a variable should be stored in a CPU register rather than in memory for faster access.
-**It's only a suggestion** - The compiler can ignore the `register` keyword entirely. Modern compilers are very good at optimization and often make better decisions about register allocation than programmers.
-**Restrictions** - You cannot take the address of a register variable using the `&` operator, since registers don't have memory addresses.
-# **Note 12: " Volatile Keyword "**
-The `volatile` keyword in C is a type qualifier that tells the compiler that a variable's value can be changed by something outside the normal program flow, and therefore the compiler should not optimize access to that variable.
-`volatile` and `const` keywords are called **Qualifiers**.
+### register Keyword
+- **Suggests** to the compiler that a variable should be stored in CPU registers
+- Compiler may ignore this suggestion
+- **Restriction:** Cannot use the address operator (`&`) on register variables
+- Modern compilers typically handle register allocation better than manual specification
 
-|Storage class (storage specifier)|Storage|Initial value|Scope|Lifetime|
-|---|---|---|---|---|
-|**auto**|stack|garbage|within block|End of block|
-|**extern**|data or bss|Zero|global, multiple files|Till end of program|
-|**static**|data or bss|Zero|within block (if static local), file scope (if static global)|Till end of program|
-|**register**|CPU registers or stack|garbage|within block|End of block|
+### volatile Keyword
+- Tells the compiler that a variable's value may change unexpectedly
+- Prevents compiler optimization that might cache the variable's value
+- Essential for hardware registers, interrupt handlers, and multi-threaded code
+- `volatile` and `const` are called **type qualifiers**
+
+## Storage Class Summary
+
+| Storage Class | Memory Location    | Initial Value | Scope                                      | Lifetime        |
+| ------------- | ------------------ | ------------- | ------------------------------------------ | --------------- |
+| **auto**      | Stack              | Garbage       | Block scope                                | End of block    |
+| **extern**    | .data or .bss      | Zero          | Global (multiple files)                    | Program end     |
+| **static**    | .data or .bss      | Zero          | Block (local) or File (global)            | Program end     |
+| **register**  | CPU registers/Stack| Garbage       | Block scope                                | End of block    |
+
+
+## Compilation (Build) process:
+
+### A. Pre-Processor:
+The preprocessor takes all the files of the project (all the source files, all built in header files, all user defined header files) and it outputs `.i` files that are equivalent to the C files.
+It deals with all commands that starts with `#` which have a name of **preprocessor directives**.
+Pre-processor replaces preprocessor directives with a text that is convenient for the rest of stages.
+We can say that `.i` file is the same as `.c` but without any `#`.
+If you try to `#include` file that doesn't exist or making anything wrong with preprocessor directives, it gives pre-processor error but depends on the compiler version.
+### B. Compiler:
+Compiler takes every file and performs on each `.i` file. 
+#### 1. Checking syntax error.
+Checks if there is any syntax error like missing semicolon, or using a variable that is not defined, or anything that irrelevant to the language. 
+#### 2. Checking prototypes of called functions:
+If there is a function that hasn't prototype, this stage will detect this error. 
+If there is a function that has a prototype of 3 arguments and you have called it with 2 only, this stage will detect this error
+If there is a function that has an implementation error in the syntax, the checking syntax error stage will detect this error.
+If there is a function that hasn't implementation at all, the linker will detect this error.
+
+#### 3. Making optimizations:
+During compilation, the compiler makes some changes in the way that your code's logic doesn't change. It makes some changes that could make your execution faster, or memory consumption less.
+The optimization differs from a compiler to another, Some IDE licenses more expensive than another IDE licenses due to the code optimization level of their compilers.
+
+##### Some of the optimizations that most compilers do:
+###### A. Removing dead code, unreachable code
+That is low level of optimization should be found in most compilers.
+
+Example of the unreachable code:
+```c
+int add(x,y) {
+	return x+y;
+	int z=x*y; // unreachable
+}
+```
+It is unreachable code as you return before executing it, which means it is never executed.
+It takes some of the flash but it is not executed so it won't bother the RAM
+
+
+Example of the dead code:
+```c
+int add(x,y) {
+	int z = x*y; // Dead
+	return x+y;
+}
+```
+It is dead as you will never make a use of it. It is worst than unreachable code as it is executed and has no use. It takes some of the flash and also increases the time of execution and stores a variable on the RAM.
+
+###### B. Deploying `register` keyword
+If you have a variable that is used a lot in the program so it will add to a register in the CPU automatically, which will help decreasing the execution time.
+
+###### C. `Inline` expansion
+It takes all the function that you've written and apply `inline` keyword to them all.
+This can be turned off in the IDE's settings
+
+#### 4. Converting C to Assembly
+This happens on the `.i` files. After the conversion the output will be `.s`
+##### Inside the `.s` file there are 4 tables:
+###### Assembly table:
+This contains the code written in Assembly.
+###### Symbol table:
+It contains each symbol and its virtual address. The symbol means the name of any variable or any function. It contains a virtual address as during this stage it doesn't know anything about the real memory that this code will go to as it is the last stage at compilation. Later it will replace those virtual addresses by the real ones.
+###### Export table and Import table:
+These two tables are essential for the linker as it needs them much during linkage, 
+The export table has some info about my functions, my global variables.
+The import table has some info about called functions, extern global variables.
+
+### C. Assembler:
+The assembler takes in the `.s` files that are assembly files and convert them into object files `.o`, which are binary code (machine code)
+and some modern compilers has the assembler as a part of its compiler, so it takes in  `.i` files and outputs out the `.o` files.
+
+### D. Linker:
+The linker takes the object files  `.o` and the pre-compiled files.
+The pre-compiled files are files that are pre-compiled and inserted in the project, they are used when someone makes a program but he doesn't want to share its source code, so he compiles the program and puts it in the rest of the project so that you can call a function that is in the pre-compiled files but you can not view its implementation.
+The linker views the **import table** of each object file, when it finds a function call it searches about its implementation in the **export table** if it finds it fine, if doesn't it searches in the other **export tables**, then searches the pre-compiled files, if it finds it in the pre-compiled files but having `static` keyword before, it refuses the request as it can't be externed.
+The linker outputs the **re-allocatable files**. It is considered the exe file but it has only one problem.
+The problem is having no real addresses it needs real addresses to every symbol.
+So, We need to proceed to the final stage of compilation process.
+
+### E. Locator:
+The locator takes in the re-allocatable files and another file called **linker script file**.
+The linker script file is a file that contains memory classification in details like how many segments in flash and RAM and the starting address and the ending address of each segment in them and the size of each segment. It is written in a script language.
+It outputs the `.exe` file after replacing each virtual address in the **re-allocatable files** with the real addresses. It outputs **map file** that is very helpful for debugging and not all the IDE's outputs it.
+**In Most compilers the locator is a part from the linker**
+
+
+
+# Task
+What is the output of this code?
+```c
+#include <stdio.h>
+
+int fun() {
+	static int num = 16;
+	return num--;
+}
+
+int main() {
+	for(fun(); fun(); fun())
+		printf("%i ", fun());
+	
+	return 0;
+}
+```
+
+The output of this code will be `14 11 8 5 2`
+
+`for(fun(); fun(); fun())` - this is a for loop with three parts
+- **Initialization**: `fun()` called → returns 16, `num` becomes 15
+- **Condition**: `fun()` called → returns 15 (truthy), `num` becomes 14
+- **Loop body**: `printf("%d ", fun());` → returns 14, `num` becomes 13, prints "14 "
+- **Update**: `fun()` called → returns 13, `num` becomes 12
+- **Condition**: `fun()` called → returns 12 (truthy), `num` becomes 11
+- **Loop body**: `printf("%d ", fun());` → returns 11, `num` becomes 10, prints "11 "
+- **Update**: `fun()` called → returns 10, `num` becomes 9
+- **Condition**: `fun()` called → returns 9 (truthy), `num` becomes 8
+- **Loop body**: `printf("%d ", fun());` → returns 8, `num` becomes 7, prints "8 "
+- **Update**: `fun()` called → returns 7, `num` becomes 6
+- **Condition**: `fun()` called → returns 6 (truthy), `num` becomes 5
+- **Loop body**: `printf("%d ", fun());` → returns 5, `num` becomes 4, prints "5 "
+- **Update**: `fun()` called → returns 4, `num` becomes 3
+- **Condition**: `fun()` called → returns 3 (truthy), `num` becomes 2
+- **Loop body**: `printf("%d ", fun());` → returns 2, `num` becomes 1, prints "2 "
+- **Update**: `fun()` called → returns 1, `num` becomes 0
+- **Condition**: `fun()` called → returns 0 (false), loop terminates
