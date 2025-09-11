@@ -38,13 +38,13 @@ int A::value = 10;  // Define the static member variable
 
 ### Static vs Dynamic Scoping
 
-| Feature              | Static Scoping (Lexical)        | Dynamic Scoping                    |
-| -------------------- | ------------------------------- | ---------------------------------- |
-| **When decided**     | Compile time                    | Runtime                            |
-| **How resolved**     | Based on **code structure**     | Based on **call stack**           |
-| **Common in**        | C, C++, Java, Python, JavaScript| Lisp (early), Perl, Bash (partial)|
-| **Efficiency**       | Faster (resolved at compile time)| Slower (runtime lookup required)  |
-| **Behavior**         | Always consistent               | Depends on calling context         |
+| Feature          | Static Scoping (Lexical)          | Dynamic Scoping                    |
+| ---------------- | --------------------------------- | ---------------------------------- |
+| **When decided** | Compile time                      | Runtime                            |
+| **How resolved** | Based on **code structure**       | Based on **call stack**            |
+| **Common in**    | C, C++, Java, Python, JavaScript  | Lisp (early), Perl, Bash (partial) |
+| **Efficiency**   | Faster (resolved at compile time) | Slower (runtime lookup required)   |
+| **Behavior**     | Always consistent                 | Depends on calling context         |
 
 #### Static Scoping (Lexical Scoping)
 In static scoping, variable resolution follows the lexical structure of the code. The compiler searches for variables in the containing block or function first, then in outer scopes, and finally in global scope. This approach looks at **where the variable is defined in the source code**, not where the function is called. Static scoping is used by **C, C++, Java, Python, and JavaScript**.
