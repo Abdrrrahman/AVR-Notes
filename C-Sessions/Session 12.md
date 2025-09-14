@@ -337,15 +337,11 @@ int print2(void) {
 ```
 
 Static variables must be initialized with compile-time constants only.
-
 ## Key Insight: Static Keyword Effects
-
 **Does the `static` keyword affect scope or lifetime?**
 - For **global variables:** Affects scope (limits to file scope)
 - For **local variables:** Affects lifetime (extends to program lifetime)
-
 ## Static Functions
-
 By default, functions have software scope and can be used across files. The `static` keyword limits function scope to the current file.
 
 **Example: Regular function (accessible across files):**
@@ -400,9 +396,8 @@ int main() {
 ### Const Global Variables
 - Have the same properties as regular global variables except:
 - Cannot be modified after initialization
-- Stored in `.rodata` (read-only data) segment instead of `.data` or `.bss`
+- Stored in `.rodata` (read-only data) segment instead of `.data` in initialized non zero values, and stored in `.bss` in initialized zero values, or uninitialized.
 - Attempting to modify results in runtime error
-
 ## Memory Segments
 
 ### RAM Segments:
