@@ -54,4 +54,4 @@ Since these notes are part of an ongoing learning process, **contributions are d
 
 ## 📄 License
 
-This repository is licensed under the **MIT License**. Feel free to use, modify, and distribute these notes for educational purposes. See the [LICENSE](LICENSE) file for more details.
+This repository is licensed under the **MIT License**. Feel free to use, modify, and distribute these notes for educational purposes. See the [LICENSE](LICENSE.md) file for more details.
