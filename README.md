@@ -11,21 +11,20 @@ Welcome to **AVR-Notes**! This repository is a comprehensive personal documentat
 ### 1. C & Embedded C
 This section covers foundational C programming concepts tailored for embedded systems development.
 
-* [Session 1: Basic Syntax](./C-Embedded_C/1.%20Basic%20Syntax)
-* [Session 2: Bitmasking and Shifting](./C-Embedded_C/2.%20Bitmasking%20and%20Shifting)
-* [Session 3: Promotion](./C-Embedded_C/3.%20Promotion)
-* [Session 4: Condition Flow](./C-Embedded_C/4.%20Condition%20flow)
-* [Session 5: Functions and Modularity](./C-Embedded_C/5.%20Functions%20and%20Modularity)
-* [Session 6: Memory Management & Compilation Process](./C-Embedded_C/6.%20Memory%20Management%20%26%20Compilation%20Process)
-* [Session 8: Pointers and Endianness](./C-Embedded_C/8.%20Pointers%20and%20Endianness)
-* [Session 9: Arrays](./C-Embedded_C/9.%20Arrays)
-* [Session 10: Pre-Processor Directives](./C-Embedded_C/10.%20Pre-Processor%20Directives)
-* [Session 11: String Methods](./C-Embedded_C/11.%20String%20Methods)
-* [Session 12: Strings](./C-Embedded_C/12.%20Strings)
-* [Session 13: Dynamic Memory](./C-Embedded_C/13.%20Dynamic%20Memory)
-* [Session 14: User-Defined Datatypes](./C-Embedded_C/14.%20User-Defined%20Datatypes)
-* [Session 15: SOAC, MISRA C and Special Type Functions](./C-Embedded_C/15.%20SOAC,%20MISRA%20C%20and%20Special%20Type%20Functions)
-
+- [Session 1: Basic Syntax](C-Embedded_C/1.%20Basic%20Syntax.md)
+- [Session 2: Bitmasking and Shifting](C-Embedded_C/2.%20Bitmasking%20and%20Shifting.md)
+- [Session 3: Promotion](C-Embedded_C/3.%20Promotion.md)
+- [Session 4: Condition Flow](C-Embedded_C/4.%20Condition%20flow.md)
+- [Session 5: Functions and Modularity](C-Embedded_C/5.%20Functions%20and%20Modularity.md)
+- [Session 6: Memory Management & Compilation Process](C-Embedded_C/6.%20Memory%20Management%20%26%20Compilation%20Process.md)
+- [Session 8: Pointers and Endianness](C-Embedded_C/8.%20Pointers%20and%20Endianness.md)
+- [Session 9: Arrays](C-Embedded_C/9.%20Arrays.md)
+- [Session 10: Pre-Processor Directives](C-Embedded_C/10.%20Pre-Processor%20Directives.md)
+- [Session 11: String Methods](C-Embedded_C/11.%20String%20Methods.md)
+- [Session 12: Strings](C-Embedded_C/12.%20Strings.md)
+- [Session 13: Dynamic Memory](C-Embedded_C/13.%20Dynamic%20Memory.md)
+- [Session 14: User-Defined Datatypes](C-Embedded_C/14.%20User-Defined%20Datatypes.md)
+- [Session 15: SOAC, MISRA C and Special Type Functions](C-Embedded_C/15.%20SOAC,%20MISRA%20C%20and%20Advanced%20Functions%20Topics.md) 
 ### 2. Data Structures and Algorithms (DSA)
 *Core algorithms and hardware-efficient data structures suited for constrained environments.*
 To be Added
