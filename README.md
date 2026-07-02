@@ -1,4 +1,4 @@
-# AVR-Notes 🚀
+# AVR-Notes
 
 Welcome to **AVR-Notes**! This repository is a comprehensive personal documentation of my journey learning Embedded Systems, specifically focusing on **AVR Processors**. It transitions from core programming foundations to low-level hardware interfacing and real-time systems.
 
