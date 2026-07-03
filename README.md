@@ -16,7 +16,8 @@ This section covers foundational C programming concepts tailored for embedded sy
 - [Session 3: Promotion](C-Embedded_C/3.%20Promotion.md)
 - [Session 4: Condition Flow](C-Embedded_C/4.%20Condition%20flow.md)
 - [Session 5: Functions and Modularity](C-Embedded_C/5.%20Functions%20and%20Modularity.md)
-- [Session 6: Memory Management & Compilation Process](C-Embedded_C/6.%20Memory%20Management%20%26%20Compilation%20Process.md)
+- [Session 6: Memory Management](C-Embedded_C/6.%20Memory%20Management.md)
+- [Session 7: Compilation Process](C-Embedded_C/Compilation%20Process.md)
 - [Session 8: Pointers and Endianness](10.%20Pointers%20and%20Endianness.md)
 - [Session 9: Arrays](C-Embedded_C/9.%20Arrays.md)
 - [Session 10: Pre-Processor Directives](8.%20Pre-Processor%20Directives.md)
@@ -24,8 +25,10 @@ This section covers foundational C programming concepts tailored for embedded sy
 - [Session 12: Strings](C-Embedded_C/12.%20Strings.md)
 - [Session 13: Dynamic Memory](C-Embedded_C/13.%20Dynamic%20Memory.md)
 - [Session 14: User-Defined Datatypes](C-Embedded_C/14.%20User-Defined%20Datatypes.md)
-- [Session 15: SOAC, MISRA C and Special Type Functions](C-Embedded_C/15.%20SOAC,%20MISRA%20C%20and%20Advanced%20Functions%20Topics.md) 
+- [Session 15: SOAC, MISRA C and Advanced Functions Topics](C-Embedded_C/15.%20SOAC,%20MISRA%20C%20and%20Advanced%20Functions%20Topics.md) 
 ### 2. Data Structures and Algorithms (DSA)
+- [Session 1: Data Structures Introdutcion](DSA/Data%20Structures%20intro.md)
+- [Session 2: Linked List](DSA/Linked%20List.md)
 *Core algorithms and hardware-efficient data structures suited for constrained environments.*
 To be Added
 ### 3. AVR Interfacing
