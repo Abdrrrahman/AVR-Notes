@@ -1,0 +1,205 @@
+{
+  "main": {
+    "id": "2ae0bc60f5926551",
+    "type": "split",
+    "children": [
+      {
+        "id": "6a7eb29d066c3924",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "568ff6b7adb0bbce",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "15. SOAC, MISRA C and Advanced Functions Topics.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "15. SOAC, MISRA C and Advanced Functions Topics"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "99fb6cd8a25c4e80",
+    "type": "split",
+    "children": [
+      {
+        "id": "58ea1291bcbf631f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8c52ad5e6ac878a6",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "ba34353215988eed",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "3fff974c3548c23d",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "5255c4f21006b23f",
+    "type": "split",
+    "children": [
+      {
+        "id": "aa061ecdf0ccf728",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "48c66c5c371829ba",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Untitled.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Untitled"
+            }
+          },
+          {
+            "id": "865040e9079c160c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Untitled.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Untitled"
+            }
+          },
+          {
+            "id": "f134b38d69115121",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "c2594a71c6db286f",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "524a7602452adf76",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Untitled.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Untitled"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "568ff6b7adb0bbce",
+  "lastOpenFiles": [
+    "Untitled.md",
+    "14. User-Defined Datatypes.md",
+    "12. String Methods.md",
+    "10. Pre-Processor Directives.md",
+    "9. Arrays.md",
+    "8. Pointers and Endianness.md",
+    "7. Compilation Process.md",
+    "6. Memory Management & Compilation Process.md",
+    "5. Functions and Modularity.md",
+    "4. Condition flow.md",
+    "3. Promotion.md",
+    "2. Bitmasking and Shifting.md",
+    "1. Basic Syntax.md",
+    "15. SOAC, MISRA C and Advanced Functions Topics.md",
+    "11. Strings.md",
+    "13. Dynamic Memory.md"
+  ]
+}
