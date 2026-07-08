@@ -27,9 +27,13 @@ This section covers foundational C programming concepts tailored for embedded sy
 - [Session 14: Dynamic Memory](C-Embedded_C/14.%20Dynamic%20Memory.md)
 - [Session 15: SOAC, MISRA C and Advanced Functions Topics](C-Embedded_C/15.%20SOAC,%20MISRA%20C%20and%20Advanced%20Functions%20Topics.md) 
 ### 2. Data Structures and Algorithms (DSA)
-- [Session 1: Data Structures Introduction](DSA/1.%20Intro.md)
-- [Session 2: Linked List](DSA/2.%20Linked%20List.md)
+- [DS Part 1: Data Structures Introduction](DSA/1.%20Intro.md)
+- [DS Part 2: Linked List](DSA/2.%20Linked%20List.md)
+- [DS Part 3: Stack](DSA/3.%20Stack.md)
+- [DS Part 4: Queue](DSA/4.%20Queue.md)
 
+ Algorithms Part to be Added.
+ 
 *Core algorithms and hardware-efficient data structures suited for constrained environments.*
 To be Added
 ### 3. AVR Interfacing
